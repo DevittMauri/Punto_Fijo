@@ -1,0 +1,39 @@
+import math
+
+# Función g(x) para el método de punto fijo
+def g(x):
+    return (x**2 + 12) / 7
+
+# Implementación del método de punto fijo
+def metodo_punto_fijo(x0, tolerancia, iter_max):
+    resultados = []
+    iteracion = 0
+    error = 100  # Error inicial (valor grande)
+    
+    while error > tolerancia and iteracion < iter_max:
+        x1 = g(x0)
+        if iteracion == 0:
+            error = 100  # Para la primera iteración
+        else:
+            error = abs((x1 - x0) / x1) * 100  # Error porcentual
+        
+        resultados.append((iteracion, x0, x1, error))
+        
+        # Actualizar valores para la próxima iteración
+        x0 = x1
+        iteracion += 1
+    
+    return resultados
+
+# Parámetros iniciales
+x0 = 0  # Valor inicial
+tolerancia = 0.05  # Tolerancia en porcentaje
+iter_max = 50  # Número máximo de iteraciones
+
+# Ejecutar el método de punto fijo
+resultados = metodo_punto_fijo(x0, tolerancia, iter_max)
+
+# Imprimir resultados
+print(f"#\t\tx_i\t\tg(x_i)\t\tEa%")
+for i, (iteracion, xi, gxi, ea) in enumerate(resultados):
+    print(f"{iteracion}\t\t{xi:.9f}\t{gxi:.9f}\t{ea:.6f}")
